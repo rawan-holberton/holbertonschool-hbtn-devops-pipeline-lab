@@ -81,3 +81,15 @@ jobs:
           name: test-reports
           path: ./reports/
           retention-days: 7
+  build:
+    name: Build and Publish
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
